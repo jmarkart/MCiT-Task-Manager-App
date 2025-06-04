@@ -21,7 +21,7 @@ due_date = st.date_input("Fälligkeitsdatum wählen")
 reminder_date = st.date_input("Erinnerungsdatum wählen")
 subject = st.text_input("Aufgabenbetreff eingeben")
 description = st.text_area("Beschreibung einfügen")
-priority = st.selectbox("Priorität wählen", ["Hoch", "Mittel", "Niedrig"])
+priority = st.selectbox("Priorität wählen", ["🦣", "🦙", "🦤"])
 category = get_category_input()
 done = st.checkbox("Erledigt")
 
