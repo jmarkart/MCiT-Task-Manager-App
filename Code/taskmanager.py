@@ -18,6 +18,3 @@ priority = st.selectbox("Priorität wählen", ["Hoch", "Mittel", "Niedrig"])
 done = st.checkbox("Erledigt")
 
 print(due_date)
-
-
-
