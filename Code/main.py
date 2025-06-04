@@ -2,6 +2,7 @@ import streamlit as st
 from task_utils import add_task, get_filtered_tasks, get_all_categories, update_task_status
 from category_utils import get_category_input, get_category_filter
 from status_utils import STATUS_OPTIONS, STATUS_ICONS
+from search_utils import search_tasks
 
 st.set_page_config(
     page_icon="💥",
@@ -15,22 +16,19 @@ st.markdown(
     "Herzlich willkommen in meiner **Task Manager App**. Hier können Tasks verwaltet werden, um sich selbst noch besser zu organisieren. **Hol das beste aus dir raus! 💯🔅✔**."
 )
 
-# Eingabefelder
+# Eingabefelder für neue Aufgabe
 due_date = st.date_input("Fälligkeitsdatum wählen")
 reminder_date = st.date_input("Erinnerungsdatum wählen")
 subject = st.text_input("Aufgabenbetreff eingeben")
 description = st.text_area("Beschreibung einfügen")
 priority = st.selectbox("Priorität wählen", ["Hoch", "Mittel", "Niedrig"])
-
-# Kategorie auswählen (mit Vorschlägen/Freitext)
 category = get_category_input()
-
 done = st.checkbox("Erledigt")
 
 if "tasks" not in st.session_state:
     st.session_state["tasks"] = []
 
-# Task hinzufügen
+# Aufgabe hinzufügen
 if st.button("Task hinzufügen"):
     add_task(due_date, reminder_date, subject, description, priority, category, done)
     st.success("Task hinzugefügt!")
@@ -39,8 +37,12 @@ if st.button("Task hinzufügen"):
 all_categories = get_all_categories()
 selected_category = get_category_filter(all_categories)
 
-# Tasks filtern
+# Suchfeld
+search_query = st.text_input("Suche nach Aufgaben oder Kategorien")
+
+# Tasks filtern (erst Kategorie, dann Suchbegriff)
 filtered_tasks = get_filtered_tasks(selected_category)
+filtered_tasks = search_tasks(filtered_tasks, search_query)
 
 st.subheader("Deine Aufgaben")
 if filtered_tasks:
