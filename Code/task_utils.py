@@ -1,4 +1,26 @@
-def add_task(due_date, reminder_date, subject, description, priority, category, done):
+import streamlit as st
+
+def get_filtered_tasks(selected_category):
+    # Alle Aufgaben, wenn "Alle Kategorien" gewählt ist
+    if selected_category == "Alle Kategorien":
+        return st.session_state["tasks"]
+    # Gefilterte Aufgaben nach Kategorie
+    return [task for task in st.session_state["tasks"] if task.get("Kategorie") == selected_category]
+
+def get_all_categories():
+    # Gibt alle Kategorien zurück, die im tasks-Array verwendet werden
+    categories = list({task.get("Kategorie") for task in st.session_state["tasks"] if task.get("Kategorie")})
+    categories.sort()
+    return categories
+
+def update_task_status(index, new_status):
+    st.session_state["tasks"][index]["Status"] = new_status
+    st.session_state["tasks"][index]["Erledigt"] = (new_status == "Abgeschlossen")
+
+def add_task(
+    due_date, reminder_date, subject, description, priority, category, done,
+    note, file, link
+):
     import streamlit as st
     st.session_state["tasks"].append({
         "Fällig": due_date,
@@ -9,19 +31,7 @@ def add_task(due_date, reminder_date, subject, description, priority, category, 
         "Kategorie": category,
         "Erledigt": done,
         "Status": "Abgeschlossen" if done else "Offen",
+        "Notiz": note,
+        "Anhang": file,
+        "Link": link
     })
-
-def get_all_categories():
-    import streamlit as st
-    categories = list({task["Kategorie"] for task in st.session_state["tasks"] if task["Kategorie"]})
-    return sorted(set(categories + ["Uni", "Arbeit", "Privat", "Haushalt", "Sonstiges"]))
-
-def get_filtered_tasks(selected_category):
-    import streamlit as st
-    if selected_category == "Alle Kategorien":
-        return st.session_state["tasks"]
-    return [task for task in st.session_state["tasks"] if task["Kategorie"] == selected_category]
-
-def update_task_status(task_index, new_status):
-    import streamlit as st
-    st.session_state["tasks"][task_index]["Status"] = new_status

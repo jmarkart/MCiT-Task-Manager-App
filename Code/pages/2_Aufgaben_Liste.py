@@ -1,9 +1,6 @@
 import streamlit as st
-from task_utils import get_filtered_tasks, get_all_categories, update_task_status
-from category_utils import get_category_filter
-from status_utils import STATUS_OPTIONS
 
-# --- Session-State initialisieren ---
+# --- Session State initialisieren ---
 if "tasks" not in st.session_state:
     st.session_state["tasks"] = []
 
@@ -53,14 +50,12 @@ elif sort_option == "Priorität (Niedrig → Hoch)":
 st.subheader("Übersicht")
 if tasks:
     for idx, task in enumerate(tasks):
-        # Status ändern (achtet auf den Index im Haupt-task-Array!)
         status = st.selectbox(
             f"Status für '{task['Betreff']}' ändern",
             STATUS_OPTIONS,
             index=STATUS_OPTIONS.index(task["Status"]),
             key=f"status_{task['Betreff']}_{task['Fällig']}",
         )
-        # Update im Original-Array suchen und ändern
         for i, orig_task in enumerate(st.session_state["tasks"]):
             if (
                 orig_task["Betreff"] == task["Betreff"]
@@ -77,6 +72,19 @@ if tasks:
             f"- **Status:** {status}  \n"
             f"- **Beschreibung:** {task['Beschreibung']}"
         )
+
+        if task.get("Notiz"):
+            st.markdown(f"**Notiz:** {task['Notiz']}")
+        if task.get("Link"):
+            st.markdown(f"[🔗 Zum Link]({task['Link']})")
+        if task.get("Anhang"):
+            st.markdown("**Anhang:**")
+            st.download_button(
+                label="PDF herunterladen",
+                data=task["Anhang"].getvalue(),
+                file_name=task["Anhang"].name,
+                mime="application/pdf"
+            )
         st.write("---")
 else:
     st.info("Keine Aufgaben vorhanden.")

@@ -1,14 +1,15 @@
 import streamlit as st
+
+# --- Session State initialisieren ---
+if "tasks" not in st.session_state:
+    st.session_state["tasks"] = []
+
 from search_utils import search_tasks
 from task_utils import get_all_categories, get_filtered_tasks, update_task_status
 from category_utils import get_category_filter
 from status_utils import STATUS_OPTIONS
 
 st.title("🔍 Aufgaben durchsuchen und Status ändern")
-
-# Session State initialisieren
-if "tasks" not in st.session_state:
-    st.session_state["tasks"] = []
 
 # Kategorie-Filter
 all_categories = get_all_categories()
@@ -51,6 +52,18 @@ if results:
             f"- **Status:** {status}  \n"
             f"- **Beschreibung:** {task['Beschreibung']}"
         )
+        if task.get("Notiz"):
+            st.markdown(f"**Notiz:** {task['Notiz']}")
+        if task.get("Link"):
+            st.markdown(f"[🔗 Zum Link]({task['Link']})")
+        if task.get("Anhang"):
+            st.markdown("**Anhang:**")
+            st.download_button(
+                label="PDF herunterladen",
+                data=task["Anhang"].getvalue(),
+                file_name=task["Anhang"].name,
+                mime="application/pdf"
+            )
         st.write("---")
 else:
     st.info("Keine Aufgaben gefunden.")
