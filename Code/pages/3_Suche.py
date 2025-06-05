@@ -4,7 +4,7 @@ from task_utils import get_all_categories, get_filtered_tasks, update_task_statu
 from category_utils import get_category_filter
 from status_utils import STATUS_OPTIONS
 
-st.title("Aufgaben durchsuchen und Status ändern")
+st.title("🔍 Aufgaben durchsuchen und Status ändern")
 
 # Session State initialisieren
 if "tasks" not in st.session_state:
@@ -29,14 +29,12 @@ results = search_tasks(filtered_tasks, search_query)
 st.subheader("Suchergebnisse")
 if results:
     for idx, task in enumerate(results):
-        # Status ändern, indem du das Original im Session State findest und anpasst
         status = st.selectbox(
             f"Status für '{task['Betreff']}' ändern",
             STATUS_OPTIONS,
             index=STATUS_OPTIONS.index(task["Status"]),
             key=f"search_status_{task['Betreff']}_{task['Fällig']}",
         )
-        # Finde die Aufgabe im Original-Array und update dort den Status
         for i, orig_task in enumerate(st.session_state["tasks"]):
             if (
                 orig_task["Betreff"] == task["Betreff"]
