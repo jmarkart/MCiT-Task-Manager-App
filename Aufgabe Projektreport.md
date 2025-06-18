@@ -50,5 +50,11 @@ keine
 * Wie sieht unsere App am Ende der Projektlaufzeit aus?
 
 * Wie gut passt unser Finales Produkt zu der eingangs formulierten Produkt Vision?
-
 Unsere Vision eines schlanken, alltagstauglichen Task-Managers haben wir umgesetzt. Die wichtigsten Grundlagen sowie coole Features sind vorhanden, der Code ist sauber strukturiert, und die Benutzerführung ist intuitiv.
+
+![Scrennshot 1 von unserer App](img/Screenshot01.png)
+![Scrennshot 2 von unserer App](img/Screenshot02.png)
+![Scrennshot 3 von unserer App](img/Screenshot03.png)
+![Scrennshot 4 von unserer App](img/Screenshot04.png)
+![Scrennshot 5 von unserer App](img/Screenshot05.png)
+![Scrennshot 6 von unserer App](img/Screenshot06.png)
