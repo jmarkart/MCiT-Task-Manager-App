@@ -32,13 +32,4 @@ jonis_task_manager/
 ├── requirements.txt        # Python-Abhängigkeiten
 └── README.md               # Diese Projektbeschreibung
 
-<<<<<<< Updated upstream
-Wie unterstützt uns SCRUM?
-Wie behindert uns SCRUM?
-Wo stehen wir?
-Was machen wir als nächstes?
-=======
-Review:
-ein Absatz pro Frage!
->>>>>>> Stashed changes
 
